@@ -11,6 +11,15 @@ class Play1 extends Phaser.Scene {
     }
 
     create(){
+
+        //variables and settings
+        this.MAX_VELOCITY = 300;
+        this.physics.world.gravity.y = 100;
+        this.MAX_JUMPS = 2; // change for double/triple/etc. jumps 🤾‍♀️
+        this.JUMP_VELOCITY = -700;
+        this.physics.world.gravity.y = 2600;
+
+        //tile sprite
         this.background = this.add.tileSprite(0, 0, 960, 540, 'background').setOrigin(0, 0);
 
         // make ground tiles group
@@ -22,22 +31,86 @@ class Play1 extends Phaser.Scene {
             this.ground.add(groundTile);
         }
 
-        this.p1 = this.physics.add.sprite(120, game.config.height - 85, 'runner', 'run').setScale(1);
+        // put another tile sprite above the ground tiles
+        this.groundScroll = this.add.tileSprite(0, game.config.height-64, game.config.width, 64, 'dirt').setOrigin(0);
+
+        //set up p1 kid
+        this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner', 'run').setScale(1);
+        this.p1.setCollideWorldBounds(true);
+
+        //create animations
+        this.anims.create({
+            key: 'run',
+            frames: this.anims.generateFrameNumbers('runner', {
+                start: 0,
+                end: 3,
+            }),
+            frameRate: 20,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'jump',
+            frames: this.anims.generateFrameNumbers('runner', {
+                start: 0,
+                end: 0,
+            }),
+            frameRate: 1
+        });
+
+        this.p1.anims.play('run');
+
+        // add physics collider
+        this.physics.add.collider(this.p1, this.ground);
 
 
-
-
-
-
-
-
-        //define keys
-        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        
+
+
+       
 
     }
 
     update(){
         this.background.tilePositionX -= 0.5;
+        this.groundScroll.tilePositionX += 3;
+
+        // check keyboard input
+        if(keyA.isDown) {
+            this.p1.setVelocityX(-this.MAX_VELOCITY);
+            //this.p1.setFlip(true, false);
+            
+            this.p1.anims.play('run', true);
+        } else if(keyD.isDown) {
+            this.p1.setVelocityX(this.MAX_VELOCITY);
+            this.p1.anims.play('run', true);
+        } else {
+            this.p1.body.velocity.x = 0;
+            this.p1.anims.play('run', true);
+        }
+
+        // check if p1 is grounded
+	    this.p1.isGrounded = this.p1.body.touching.down;
+	    // if so, we have jumps to spare 
+	    if(this.p1.isGrounded) {
+	    	this.jumps = this.MAX_JUMPS;
+	    	this.jumping = false;
+	    } else {
+	    	this.p1.anims.play('jump');
+	    }
+        // allow steady velocity change up to a certain key down duration
+	    if(this.jumps > 0 && (Phaser.Input.Keyboard.DownDuration(keyW, 150) || Phaser.Input.Keyboard.DownDuration(keySPACE, 150))) {
+	        this.p1.body.velocity.y = this.JUMP_VELOCITY;
+	        this.jumping = true;
+	    } 
+        // finally, letting go of the UP key subtracts a jump
+	    if(this.jumping && (Phaser.Input.Keyboard.UpDuration(keyW) || Phaser.Input.Keyboard.UpDuration(keySPACE))) {
+	    	this.jumps--;
+	    	this.jumping = false;
+	    }
     }
 }

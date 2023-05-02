@@ -1,6 +1,8 @@
 
 'use strict';
 
+//global variables
+let cursors;
 
 let config = {
     type: Phaser.AUTO,
@@ -9,7 +11,6 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -21,6 +22,4 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-// reserve keyboard vars
-let keySPACE, keyS;
-
+let keyW, keyA, keyS, keyD, keySPACE;

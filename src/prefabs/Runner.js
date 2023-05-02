@@ -5,11 +5,16 @@ class Runner extends Phaser.GameObjects.Sprite{
 
         //add object to existing scene
         scene.add.existing(this);
-        this.hasProjectile = false;
+        this.isJumping = false;
+        this.isSliding
         this.moveSpeed = 2;
     }
 
     update(){
-        
+        if(!this.isJumping && !this.isSliding){
+            if(keySPACE.isDown){
+            
+            }
+        }
     }
 }
