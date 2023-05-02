@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload(){
         //load images
-        this.load.image('clouds', './assets/tile_menu.png');
+        this.load.image('clouds', './assets/first.png');
         this.load.image('city', './assets/tile_menu2.png');
         this.load.image('hill', './assets/title1.png');
         

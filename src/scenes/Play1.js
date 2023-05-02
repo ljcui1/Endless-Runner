@@ -5,9 +5,12 @@ class Play1 extends Phaser.Scene {
 
     preload(){
         //load images
-        this.load.spritesheet('runner', './assets/runsheet.png', {frameWidth: 32, frameHeight: 48, startFrame: 0});
+        this.load.spritesheet('runner', './assets/run_boy.png', {frameWidth: 32, frameHeight: 48, startFrame: 0});
         this.load.image('dirt', './assets/dirt_tile.png');
         this.load.image('background', './assets/first.png');
+        this.load.image('city1', './assets/city1.png');
+        this.load.image('city2', './assets/city2.png');
+        this.load.image('city3', './assets/city3.png');
     }
 
     create(){
@@ -21,6 +24,9 @@ class Play1 extends Phaser.Scene {
 
         //tile sprite
         this.background = this.add.tileSprite(0, 0, 960, 540, 'background').setOrigin(0, 0);
+        this.third = this.add.tileSprite(0, 0, 960, 540, 'city3').setOrigin(0, 0);
+        this.second = this.add.tileSprite(0, 0, 960, 540, 'city2').setOrigin(0, 0);
+        this.first = this.add.tileSprite(0, 0, 960, 540, 'city1').setOrigin(0, 0);
 
         // make ground tiles group
         this.ground = this.add.group();
@@ -45,7 +51,7 @@ class Play1 extends Phaser.Scene {
                 start: 0,
                 end: 3,
             }),
-            frameRate: 20,
+            frameRate: 10,
             repeat: -1
         });
         this.anims.create({
@@ -76,7 +82,10 @@ class Play1 extends Phaser.Scene {
     }
 
     update(){
-        this.background.tilePositionX -= 0.5;
+        this.background.tilePositionX += 0.1;
+        this.third.tilePositionX += 0.2;
+        this.second.tilePositionX += 0.25;
+        this.first.tilePositionX += 0.3;
         this.groundScroll.tilePositionX += 3;
 
         // check keyboard input
