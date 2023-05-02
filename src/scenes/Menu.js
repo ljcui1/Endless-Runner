@@ -35,18 +35,22 @@ class Menu extends Phaser.Scene {
         // Enable input events for the whole scene
         this.play.setInteractive();
         this.play.on('pointerdown', () => {
+            console.log("play");
             this.scene.start('playScene1');
             // Add code here to run when the scene is clicked
         });
         this.controls.setInteractive();
         this.controls.on('pointerdown', () => {
-            this.scene.start('playScene1');
+            console.log("controls");
+            this.scene.pause();
+            this.scene.start('controlScene');
+
             // Add code here to run when the scene is clicked
         });
 
         this.controls.setInteractive();
         this.controls.on('pointerdown', () => {
-            this.scene.start('playScene1');
+            //this.scene.start('playScene1');
             // Add code here to run when the scene is clicked
         });
 

@@ -11,6 +11,7 @@ class Runner extends Phaser.GameObjects.Sprite{
     }
 
     update(){
+        
         if(!this.isJumping && !this.isSliding){
             if(keySPACE.isDown){
             
