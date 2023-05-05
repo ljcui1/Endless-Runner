@@ -11,22 +11,26 @@ class Play1 extends Phaser.Scene {
         this.load.image('city1', './assets/city1.png');
         this.load.image('city2', './assets/city2.png');
         this.load.image('city3', './assets/city3.png');
+        this.load.image('esc', './assets/esc.png');
     }
 
     create(){
 
         //variables and settings
-        this.MAX_VELOCITY = 300;
+        this.MAX_VELOCITY = 250;
         this.physics.world.gravity.y = 100;
         this.MAX_JUMPS = 2; // change for double/triple/etc. jumps 🤾‍♀️
         this.JUMP_VELOCITY = -700;
         this.physics.world.gravity.y = 2600;
+        this.jumps = this.MAX_JUMPS;
+        this.jumping = false; // <-- Initialize 'this.jumping' to 'false'
 
         //tile sprite
         this.background = this.add.tileSprite(0, 0, 960, 540, 'background').setOrigin(0, 0);
         this.third = this.add.tileSprite(0, 0, 960, 540, 'city3').setOrigin(0, 0);
         this.second = this.add.tileSprite(0, 0, 960, 540, 'city2').setOrigin(0, 0);
         this.first = this.add.tileSprite(0, 0, 960, 540, 'city1').setOrigin(0, 0);
+        this.esc = this.add.tileSprite(0, 0, 960, 540, 'esc').setOrigin(0, 0);
 
         // make ground tiles group
         this.ground = this.add.group();
@@ -74,11 +78,25 @@ class Play1 extends Phaser.Scene {
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        
+        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
+        // set up barrier group
+        this.blockGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
 
+        // wait a few seconds before spawning barriers
+        this.time.delayedCall(Phaser.Math.Between(0, 2500), () => { 
+            this.addBlock(); 
+        });
        
 
+    }
+
+    // create new barriers and add them to existing barrier group
+    addBlock() {
+        let block = new Block(this, 50);
+        this.blockGroup.add(block);
     }
 
     update(){
@@ -121,5 +139,11 @@ class Play1 extends Phaser.Scene {
 	    	this.jumps--;
 	    	this.jumping = false;
 	    }
+
+        //pause
+        if(keyESC.isDown){
+            this.scene.pause();
+            this.scene.start('pauseScene');
+        }
     }
 }
