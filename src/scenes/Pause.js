@@ -14,8 +14,10 @@ class Pause extends Phaser.Scene {
 
     update(){
         this.input.on('pointerdown', () => {
+            console.log('unpause');
+            this.scene.stop('pauseScene');
             this.scene.resume('playScene1');
-            this.scene.stop();
+            
         });
         
     }

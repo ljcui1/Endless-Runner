@@ -47,7 +47,7 @@ class Play1 extends Phaser.Scene {
         //set up p1 kid
         this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1);
         this.p1.setCollideWorldBounds(true);
-
+        
         //create animations
         this.anims.create({
             key: 'run',
@@ -79,7 +79,7 @@ class Play1 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-
+/*
         // set up barrier group
         this.blockGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -90,14 +90,15 @@ class Play1 extends Phaser.Scene {
             this.addBlock(); 
         });
        
-
+*/
     }
-
+/*
     // create new barriers and add them to existing barrier group
     addBlock() {
         let block = new Block(this, 50);
         this.blockGroup.add(block);
     }
+*/
 
     update(){
         this.background.tilePositionX += 0.1;
