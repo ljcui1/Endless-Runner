@@ -15,6 +15,7 @@ class Menu extends Phaser.Scene {
         this.load.image('controls', './assets/controls.png');
         this.load.image('credits', './assets/credits.png');
         
+        
     }
 
     create(){
@@ -36,7 +37,6 @@ class Menu extends Phaser.Scene {
         this.play.setInteractive({ useHandCursor: true });
         this.play.on('pointerdown', () => {
             console.log("play");
-            this.scene.pause();
             this.scene.start('playScene1');
         });
 
@@ -46,7 +46,7 @@ class Menu extends Phaser.Scene {
         this.controls.on('pointerdown', () => {
             console.log("controls");
             this.scene.pause();
-            this.scene.start('controlScene');
+            this.scene.launch('controlScene');
 
             // Add code here to run when the scene is clicked
         });
@@ -55,7 +55,6 @@ class Menu extends Phaser.Scene {
         this.credits.setInteractive({ useHandCursor: true });
         this.credits.on('pointerdown', () => {
             console.log('credits');
-            this.scene.pause();
             this.scene.start('creditScene');
             //this.scene.start('playScene1');
             // Add code here to run when the scene is clicked

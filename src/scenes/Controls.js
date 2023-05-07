@@ -20,8 +20,8 @@ class Controls extends Phaser.Scene {
         this.back.setInteractive();
         this.back.on('pointerdown', () => {
             console.log("back");
-            this.scene.stop('controlScene');
             this.scene.resume('menuScene');
+            this.scene.stop();
             
             
             // Add code here to run when the scene is clicked

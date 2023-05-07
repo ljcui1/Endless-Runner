@@ -79,7 +79,7 @@ class Play1 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
-/*
+
         // set up barrier group
         this.blockGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
@@ -90,15 +90,15 @@ class Play1 extends Phaser.Scene {
             this.addBlock(); 
         });
        
-*/
+
     }
-/*
+
     // create new barriers and add them to existing barrier group
     addBlock() {
         let block = new Block(this, 50);
         this.blockGroup.add(block);
     }
-*/
+
 
     update(){
         this.background.tilePositionX += 0.1;
@@ -107,18 +107,18 @@ class Play1 extends Phaser.Scene {
         this.first.tilePositionX += 0.3;
         this.groundScroll.tilePositionX += 3;
 
+        
+        this.p1.anims.play('run', true);
+
         // check keyboard input
         if(keyA.isDown) {
             this.p1.setVelocityX(-this.MAX_VELOCITY);
             //this.p1.setFlip(true, false);
             
-            this.p1.anims.play('run', true);
         } else if(keyD.isDown) {
             this.p1.setVelocityX(this.MAX_VELOCITY);
-            this.p1.anims.play('run', true);
         } else {
-            this.p1.body.velocity.x = 0;
-            this.p1.anims.play('run', true);
+            this.p1.body.setVelocityX(0);
         }
 
         // check if p1 is grounded
@@ -142,9 +142,9 @@ class Play1 extends Phaser.Scene {
 	    }
 
         //pause
-        if(keyESC.isDown){
+        if(Phaser.Input.Keyboard.JustDown(keyESC)){
             this.scene.pause();
-            this.scene.start('pauseScene');
+            this.scene.launch('pauseScene');
         }
     }
 }
