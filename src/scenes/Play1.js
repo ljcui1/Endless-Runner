@@ -71,6 +71,7 @@ class Play1 extends Phaser.Scene {
 
         // add physics collider
         this.physics.add.collider(this.p1, this.ground);
+        this.physics.add.collider(this.p1, this.newBlock);
 
 
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -85,17 +86,22 @@ class Play1 extends Phaser.Scene {
             runChildUpdate: true
         });
 
-        this.time.delayedCall(2500, () => {
+        this.addBlock();
+
+        this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
             this.addBlock();
         })
+        
        
+        
 
     }
 
     // create new barriers and add them to existing barrier group
     addBlock() {
-        let newBlock = new Block(this, 50);
+        let newBlock = new Block(this, 180).setOrigin(0.5, 1);
         this.blockGroup.add(newBlock);
+        
     }
 
 
@@ -105,6 +111,18 @@ class Play1 extends Phaser.Scene {
         this.second.tilePositionX += 0.25;
         this.first.tilePositionX += 0.3;
         this.groundScroll.tilePositionX += 3;
+
+        // add new block when existing block hits center X
+        if(this.newBlock.x < game.config.width/2) {
+            // (recursively) call parent scene method from this context
+            this.addBlock();
+            //this.newBlock = false;
+        }
+
+        // destroy block if it reaches the left edge of the screen
+        if(this.newBlock.x < -this.width) {
+            this.destroy();
+        }
 
         
         this.p1.anims.play('run', true);

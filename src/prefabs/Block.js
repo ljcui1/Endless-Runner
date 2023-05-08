@@ -8,8 +8,9 @@ class Block extends Phaser.Physics.Arcade.Sprite{
         // set up physics sprite
         scene.add.existing(this);    // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);    // add to physics system
-        this.setVelocityX(velocity);            // make it go!
-        this.setImmovable();                    
+        this.setVelocityX(-velocity);            // make it go!
+        this.setImmovable();             
+        this.body.setAllowGravity(false);       
         
         //this.newBarrier = true;                 // custom property to control barrier spawning
 
@@ -17,16 +18,6 @@ class Block extends Phaser.Physics.Arcade.Sprite{
     }
 
     update() {
-        // add new block when existing block hits center X
-        if(this.newBlock && this.x < centerX) {
-            // (recursively) call parent scene method from this context
-            scene.addBlock(this.parent, this.velocity);
-            //this.newBlock = false;
-        }
-
-        // destroy block if it reaches the left edge of the screen
-        if(this.x < -this.width) {
-            this.destroy();
-        }
+        
     }
 }
