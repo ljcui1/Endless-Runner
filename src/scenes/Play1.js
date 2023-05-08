@@ -82,21 +82,20 @@ class Play1 extends Phaser.Scene {
 
         // set up barrier group
         this.blockGroup = this.add.group({
-            runChildUpdate: true    // make sure update runs on group children
+            runChildUpdate: true
         });
 
-        // wait a few seconds before spawning barriers
-        this.time.delayedCall(Phaser.Math.Between(0, 2500), () => { 
-            this.addBlock(); 
-        });
+        this.time.delayedCall(2500, () => {
+            this.addBlock();
+        })
        
 
     }
 
     // create new barriers and add them to existing barrier group
     addBlock() {
-        let block = new Block(this, 50);
-        this.blockGroup.add(block);
+        let newBlock = new Block(this, 50);
+        this.blockGroup.add(newBlock);
     }
 
 
@@ -146,5 +145,7 @@ class Play1 extends Phaser.Scene {
             this.scene.pause();
             this.scene.launch('pauseScene');
         }
+
+        
     }
 }
