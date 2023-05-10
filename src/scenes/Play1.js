@@ -125,15 +125,15 @@ class Play1 extends Phaser.Scene {
     }
 
     addEnemy(){
-        let newBird = new Enemy(this, 180).setOrigin(0.5, 1);
-        this.birdGroup.add(newBird);
+        this.newBird = new Enemy(this, 180).setOrigin(0.5, 1);
+        this.birdGroup.add(this.newBird);
     }
     
     // create new barriers and add them to existing barrier group
     addBlock() {
-        let newBlock = new Block(this, 180).setOrigin(0.5, 1);
-        this.blockGroup.add(newBlock);
-        let meat = this.add.sprite(newBlock.x, newBlock.y - 64, 'meat');
+        this.newBlock = new Block(this, 180).setOrigin(0.5, 1);
+        this.blockGroup.add(this.newBlock);
+        this.meat = this.add.sprite(this.newBlock.x, this.newBlock.y - 64, 'meat');
         
     }
 
