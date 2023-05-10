@@ -6,6 +6,7 @@ class Play1 extends Phaser.Scene {
     preload(){
         //load images
         this.load.spritesheet('runner', './assets/run_boy.png', {frameWidth: 32, frameHeight: 48, startFrame: 0});
+        this.load.spritesheet('enemy', './assets/birdsheet.png', {frameWidth: 48, frameHeight: 32, startFrame: 0});
         this.load.image('dirt', './assets/dirt_tile.png');
         this.load.image('background', './assets/first.png');
         this.load.image('city1', './assets/city1.png');
@@ -49,7 +50,20 @@ class Play1 extends Phaser.Scene {
         this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1);
         this.p1.setCollideWorldBounds(true);
         
+
+
         //create animations
+
+        this.anims.create({
+            key: 'bird',
+            frames: this.anims.generateFrameNumbers('enemy',{
+                start:0,
+                end: 2,
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
         this.anims.create({
             key: 'run',
             frames: this.anims.generateFrameNumbers('runner', {
@@ -93,6 +107,17 @@ class Play1 extends Phaser.Scene {
             this.addBlock();
         })
 
+         // set up barrier group
+         this.birdGroup = this.add.group({
+            runChildUpdate: true
+        });
+
+        this.addEnemy();
+
+        this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
+            this.addEnemy();
+        })
+
         
         
        
@@ -100,6 +125,11 @@ class Play1 extends Phaser.Scene {
 
     }
 
+    addEnemy(){
+        let newBird = new Enemy(this, 180).setOrigin(0.5, 1);
+        this.birdGroup.add(newBird);
+    }
+    
     // create new barriers and add them to existing barrier group
     addBlock() {
         let newBlock = new Block(this, 180).setOrigin(0.5, 1);
