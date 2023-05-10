@@ -169,7 +169,7 @@ class Play1 extends Phaser.Scene {
     addBlock() {
         this.newBlock = new Block(this, 180).setOrigin(0.5, 1);
         this.blockGroup.add(this.newBlock);
-        this.meat = this.add.sprite(this.newBlock.x, this.newBlock.y - 64, 'meat');
+        //this.meat = this.add.sprite(this.newBlock.x, this.newBlock.y - 64, 'meat');
         
     }
 
@@ -181,10 +181,10 @@ class Play1 extends Phaser.Scene {
         this.first.tilePositionX += 0.3;
         this.groundScroll.tilePositionX += 3;
 
-        this.updateClock();
+        //this.updateClock();
 
         // add new block when existing block hits center X
-        if(this.newBlock.x < (2*(game.config.width/3))) {
+        if(this.newBlock.x < (4*(game.config.width/5))) {
             // (recursively) call parent scene method from this context
             this.addBlock();
             //this.newBlock = false;
@@ -207,7 +207,6 @@ class Play1 extends Phaser.Scene {
             this.newBird.destroy();
         }
 
-        this.meat.setVelocityX = 180;
 
 
         
