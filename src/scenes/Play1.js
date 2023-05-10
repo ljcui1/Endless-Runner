@@ -18,6 +18,8 @@ class Play1 extends Phaser.Scene {
 
     create(){
 
+        this.score = 0;
+
         //variables and settings
         this.MAX_VELOCITY = 250;
         this.MAX_JUMPS = 2; // change for double/triple/etc. jumps 🤾‍♀️
@@ -83,9 +85,7 @@ class Play1 extends Phaser.Scene {
 
         this.p1.anims.play('run');
 
-        // add physics collider
-        this.physics.add.collider(this.p1, this.ground);
-        this.physics.add.collider(this.p1, this.newBlock);
+        
 
 
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -102,7 +102,7 @@ class Play1 extends Phaser.Scene {
 
         this.addBlock();
 
-        this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
+        this.time.delayedCall(Phaser.Math.Between(250, 1000), () => {
             this.addBlock();
         })
 
@@ -117,16 +117,52 @@ class Play1 extends Phaser.Scene {
             this.addEnemy();
         })
 
+        // add physics collider
+        this.physics.add.collider(this.p1, this.ground);
+        this.physics.add.collider(this.p1, this.blockGroup);
+        this.physics.collide(this.p1, this.newBird, () =>{
+            this.scene.pause();
+            this.scene.launch('overScene');
+            this.clock.paused(true);
+        })
+
+        this.clock = this.time.addEvent({
+            delay: 10,
+            callback: this.updateClock,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Display the score text
+        this.scoreText = this.add.text(700, 500, `Score: ${this.score}`, {
+            fontSize: "24px",
+            fill: "#ffffff"
+        });
+  
+        /*this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            this.add.text (game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+            this.gameOver = true;
+        }, null, this);
         
-        
+        */
        
         
 
     }
 
+    updateClock() {
+        // Update the score based on the elapsed time
+        this.score += 1;
+    
+        // Update the score text
+        this.scoreText.setText(`Score: ${this.score}`);
+      }
+
     addEnemy(){
-        this.newBird = new Enemy(this, 180).setOrigin(0.5, 1);
+        this.newBird = new Enemy(this, 250).setOrigin(0.5, 1);
         this.birdGroup.add(this.newBird);
+        this.newBird.anims.play('bird');
     }
     
     // create new barriers and add them to existing barrier group
@@ -145,8 +181,10 @@ class Play1 extends Phaser.Scene {
         this.first.tilePositionX += 0.3;
         this.groundScroll.tilePositionX += 3;
 
+        this.updateClock();
+
         // add new block when existing block hits center X
-        if(this.newBlock.x < game.config.width/2) {
+        if(this.newBlock.x < (2*(game.config.width/3))) {
             // (recursively) call parent scene method from this context
             this.addBlock();
             //this.newBlock = false;
@@ -154,8 +192,23 @@ class Play1 extends Phaser.Scene {
 
         // destroy block if it reaches the left edge of the screen
         if(this.newBlock.x < -this.width) {
-            this.destroy();
+            this.newBlock.destroy();
         }
+
+        // add new block when existing block hits center X
+        if(this.newBird.x < (3*(game.config.width/4))) {
+            // (recursively) call parent scene method from this context
+            this.addEnemy();
+            //this.newBlock = false;
+        }
+
+        // destroy block if it reaches the left edge of the screen
+        if(this.newBird.x < -this.width) {
+            this.newBird.destroy();
+        }
+
+        this.meat.setVelocityX = 180;
+
 
         
         this.p1.anims.play('run', true);

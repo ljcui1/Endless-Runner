@@ -1,7 +1,7 @@
 //enemy prefab
 class Enemy extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, velocity){
-        super(scene, game.config.width + 64, Phaser.Math.Between(192, 476), 'bird');
+        super(scene, game.config.width + 64, Phaser.Math.Between(192, 476), 'enemy');
 
         //this.Play1 = Play1;               // maintain scene context
 

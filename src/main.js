@@ -17,9 +17,11 @@ let config = {
             }
         }
     },
-    scene: [ Menu, Play1, Controls, Credits, Pause ]
+    scene: [ Menu, Play1, Controls, Credits, Pause, GameOver ]
 };
 
 let game = new Phaser.Game(config);
 
 let keyW, keyA, keyS, keyD, keySPACE, keyESC;
+let highScore;
+let newHighScore = false;
