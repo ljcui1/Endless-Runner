@@ -12,6 +12,7 @@ class Play1 extends Phaser.Scene {
         this.load.image('city2', './assets/city2.png');
         this.load.image('city3', './assets/city3.png');
         this.load.image('esc', './assets/esc.png');
+        this.load.image('meat', './assets/meat.png');
     }
 
     create(){
@@ -91,6 +92,8 @@ class Play1 extends Phaser.Scene {
         this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
             this.addBlock();
         })
+
+        
         
        
         
@@ -101,6 +104,7 @@ class Play1 extends Phaser.Scene {
     addBlock() {
         let newBlock = new Block(this, 180).setOrigin(0.5, 1);
         this.blockGroup.add(newBlock);
+        let meat = this.add.sprite(newBlock.x, newBlock.y - 64, 'meat');
         
     }
 
