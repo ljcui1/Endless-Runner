@@ -20,7 +20,6 @@ class Play1 extends Phaser.Scene {
 
         //variables and settings
         this.MAX_VELOCITY = 250;
-        this.physics.world.gravity.y = 100;
         this.MAX_JUMPS = 2; // change for double/triple/etc. jumps 🤾‍♀️
         this.JUMP_VELOCITY = -700;
         this.physics.world.gravity.y = 2600;
