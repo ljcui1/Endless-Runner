@@ -51,6 +51,9 @@ class Play1 extends Phaser.Scene {
         this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1);
         this.p1.setCollideWorldBounds(true);
         
+        this.physics.world.setBounds(0, 0, game.config.width, game.config.height, false, true, true, true);
+
+        
 
 
         //create animations
@@ -120,11 +123,9 @@ class Play1 extends Phaser.Scene {
         // add physics collider
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.blockGroup);
-        this.physics.collide(this.p1, this.newBird, () =>{
-            this.scene.pause();
-            this.scene.launch('overScene');
-            this.clock.paused(true);
-        })
+
+        
+
 
         this.clock = this.time.addEvent({
             delay: 10,
@@ -169,7 +170,7 @@ class Play1 extends Phaser.Scene {
     addBlock() {
         this.newBlock = new Block(this, 180).setOrigin(0.5, 1);
         this.blockGroup.add(this.newBlock);
-        //this.meat = this.add.sprite(this.newBlock.x, this.newBlock.y - 64, 'meat');
+        
         
     }
 
@@ -207,6 +208,26 @@ class Play1 extends Phaser.Scene {
             this.newBird.destroy();
         }
 
+
+        /*this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
+            this.meat = this.add.sprite(960 + 32, Phaser.Math.Between(32, 540 - 32), 'meat');
+            this.meat.x -= 3;
+        })*/
+        
+        if (this.p1.x < 0){
+            this.scene.pause();
+            this.scene.launch('overScene', {score: this.score});
+            
+        }
+
+        if (this.physics.collide(this.p1, this.newBird)){
+            this.scene.pause();
+            this.scene.launch('overScene', {score: this.score});
+            
+        }
+
+
+        
 
 
         

@@ -3,13 +3,17 @@ class GameOver extends Phaser.Scene {
         super('overScene');
     }
 
+
     preload(){
         this.load.image('over', './assets/gameover.png');
         this.load.image('restart', './assets/restart.png');
         this.load.image('menu', './assets/mainmenu_button.png');
     }
 
-    create(){
+    create(data){
+        this.finalscore = Play1.score;
+        
+        
         this.over = this.add.tileSprite(0, 0, 960, 540, 'over').setOrigin(0, 0);
         this.restart = this.add.sprite(game.config.width/2, game.config.height/2, 'restart').setOrigin(0.5, 0.5);
         this.menu = this.add.sprite(game.config.width/2, game.config.height/2 + 130, 'menu').setOrigin(0.5, 0.5);
@@ -26,7 +30,7 @@ class GameOver extends Phaser.Scene {
             
         }
 
-        this.score = this.add.text(game.config.width/2 - 80, game.config.height/2 - 100, "Score: " + Play1.score, scoreConfig);
+        this.score = this.add.text(game.config.width/2 - 80, game.config.height/2 - 100, "Score: " + data, scoreConfig);
         
        
     }

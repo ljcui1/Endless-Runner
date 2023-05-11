@@ -10,8 +10,7 @@ class Block extends Phaser.Physics.Arcade.Sprite{
         scene.physics.add.existing(this);    // add to physics system
         this.setVelocityX(-velocity);            // make it go!
         this.setImmovable();             
-        this.body.setAllowGravity(false);
-        this.meat = scene.add.sprite(this.newBlock.x, this.newBlock.y - 64, 'meat');       
+        this.body.setAllowGravity(false);   
         
         //this.newBarrier = true;                 // custom property to control barrier spawning
 
@@ -19,7 +18,6 @@ class Block extends Phaser.Physics.Arcade.Sprite{
     }
 
     update() {
-        this.meat.setPosition(this.newBlock.x, this.newBlock.y - 64);
         
     }
 }
