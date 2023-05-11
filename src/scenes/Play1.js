@@ -147,11 +147,17 @@ class Play1 extends Phaser.Scene {
         }, null, this);
         
         */
+
+        this.physics.collide(this.p1, this.newBird, () =>{
+            this.scene.pause();
+            this.scene.launch('overScene', {score: this.score});
+        });
        
         
 
     }
 
+    
     updateClock() {
         // Update the score based on the elapsed time
         this.score += 1;
@@ -219,15 +225,6 @@ class Play1 extends Phaser.Scene {
             this.scene.launch('overScene', {score: this.score});
             
         }
-
-        if (this.physics.collide(this.p1, this.newBird)){
-            this.scene.pause();
-            this.scene.launch('overScene', {score: this.score});
-            
-        }
-
-
-        
 
 
         
