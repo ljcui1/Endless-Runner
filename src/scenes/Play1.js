@@ -215,10 +215,11 @@ class Play1 extends Phaser.Scene {
         }
 
 
-        /*this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
-            this.meat = this.add.sprite(960 + 32, Phaser.Math.Between(32, 540 - 32), 'meat');
-            this.meat.x -= 3;
-        })*/
+        this.time.delayedCall(Phaser.Math.Between(1000, 2500), () => {
+            this.meat = this.physics.add.sprite(960 + 32, Phaser.Math.Between(32, 540 - 32), 'meat');
+            this.meat.setVelocityX = -180;
+            this.meat.body.setAllowGravity(false);
+        })
         
         if (this.p1.x < 0){
             this.scene.pause();

@@ -55,7 +55,8 @@ class Menu extends Phaser.Scene {
         this.credits.setInteractive({ useHandCursor: true });
         this.credits.on('pointerdown', () => {
             console.log('credits');
-            this.scene.start('creditScene');
+            this.scene.pause();
+            this.scene.launch('creditScene');
             //this.scene.start('playScene1');
             // Add code here to run when the scene is clicked
         });
