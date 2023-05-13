@@ -123,6 +123,10 @@ class Play1 extends Phaser.Scene {
         // add physics collider
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.blockGroup);
+        this.physics.add.collider(this.p1, this.newBird, () => {
+            this.scene.pause();
+            this.scene.launch('overScene', {score: this.score});
+        });
 
         
 
@@ -130,6 +134,13 @@ class Play1 extends Phaser.Scene {
         this.clock = this.time.addEvent({
             delay: 10,
             callback: this.updateClock,
+            callbackScope: this,
+            loop: true
+        });
+
+        this.level = this.time.addEvent({
+            delay: 45000,
+            callback: this.updateSpawnRate,
             callbackScope: this,
             loop: true
         });
@@ -148,15 +159,21 @@ class Play1 extends Phaser.Scene {
         
         */
 
-        this.physics.collide(this.p1, this.newBird, () =>{
-            this.scene.pause();
-            this.scene.launch('overScene', {score: this.score});
-        });
+        
        
         
 
     }
 
+    gameOverPrompt(){
+        this.scene.pause();
+        this.scene.launch('overScene', {score: this.score});
+    }
+
+    updateSpawnRate(){
+        spawnRateBird += 20;
+        spawnRateBlock += 20;
+    }
     
     updateClock() {
         // Update the score based on the elapsed time
@@ -188,10 +205,10 @@ class Play1 extends Phaser.Scene {
         this.first.tilePositionX += 0.3;
         this.groundScroll.tilePositionX += 3;
 
-        //this.updateClock();
+        
 
         // add new block when existing block hits center X
-        if(this.newBlock.x < (4*(game.config.width/5))) {
+        if(this.newBlock.x < spawnRateBlock) {
             // (recursively) call parent scene method from this context
             this.addBlock();
             //this.newBlock = false;
@@ -203,7 +220,7 @@ class Play1 extends Phaser.Scene {
         }
 
         // add new block when existing block hits center X
-        if(this.newBird.x < (3*(game.config.width/4))) {
+        if(this.newBird.x < spawnRateBird) {
             // (recursively) call parent scene method from this context
             this.addEnemy();
             //this.newBlock = false;

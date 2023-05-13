@@ -25,4 +25,5 @@ let game = new Phaser.Game(config);
 let keyW, keyA, keyS, keyD, keySPACE, keyESC;
 let highScore;
 let newHighScore = false;
-let spawnRateBlock, spawnRateBird;
+let spawnRateBlock = 768;
+let spawnRateBird = 720;
