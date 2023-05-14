@@ -138,7 +138,7 @@ class Play1 extends Phaser.Scene {
         // add physics collider
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.blockGroup);
-        this.physics.add.collider(this.p1, this.newBird, () => {
+        this.physics.add.collider(this.p1, this.birdGroup, () => {
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
         });
