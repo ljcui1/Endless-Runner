@@ -71,7 +71,7 @@ class GameOver extends Phaser.Scene {
         this.restart.setInteractive({ useHandCursor: true });
         this.restart.on('pointerdown', () => {
             console.log("restart");
-            this.sound.play('click');
+            this.sound.play('click', {volume: 0.25});
             this.scene.stop();
             this.scene.start('playScene1');
             
@@ -81,7 +81,7 @@ class GameOver extends Phaser.Scene {
         this.menu.setInteractive({ useHandCursor: true });
         this.menu.on('pointerdown', () => {
             console.log("menu");
-            this.sound.play('click');
+            this.sound.play('click', {volume: 0.25});
             this.scene.start('menuScene');
             this.scene.stop('playScene1');
             this.scene.stop();

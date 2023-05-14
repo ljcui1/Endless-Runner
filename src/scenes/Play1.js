@@ -17,6 +17,8 @@ class Play1 extends Phaser.Scene {
         this.load.image('meat', './assets/meat.png');
         this.load.spritesheet('bone', './assets/bonesheet.png', {frameWidth: 48, frameHeight: 48, startFrame: 0});
         this.load.audio('music', './assets/backgroundmusic.wav');
+        this.load.audio('eat', './assets/eat.wav');
+        this.load.audio('die', './assets/hitHurt.wav');
     }
 
     create(){
@@ -53,12 +55,15 @@ class Play1 extends Phaser.Scene {
 
         // put another tile sprite above the ground tiles
         this.groundScroll = this.add.tileSprite(0, game.config.height-64, game.config.width, 64, 'dirt').setOrigin(0);
+        this.ground.add(this.groundScroll);
 
         //set up p1 kid
         this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1).setOrigin(0.5, 1);
+        this.physics.world.setBounds(0, 0, game.config.width, game.config.height-64, false, true, true, true);
+        
         this.p1.setCollideWorldBounds(true);
         
-        this.physics.world.setBounds(0, 0, game.config.width, game.config.height-64, false, true, true, true);
+        
 
         
 
@@ -169,12 +174,14 @@ class Play1 extends Phaser.Scene {
         this.physics.add.collider(this.p1, this.blockGroup);
         this.physics.add.collider(this.p1, this.birdGroup, () => {
             this.backgroundMusic.stop();
+            this.sound.play('die');
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
         });
 
         this.physics.add.collider(this.p1, this.meatGroup, () => {
             this.score += 25;
+            this.sound.play('eat', {volume: 0.25});
             this.newMeat.destroy();
             
         })
@@ -261,14 +268,14 @@ class Play1 extends Phaser.Scene {
         this.groundScroll.tilePositionX += 3;
 
         
-            
+            /*
         if (this.p1.anims.currentAnim.key === 'hit'){
             this.physics.add.collider(this.p1, this.newBird, () => {
                 this.score += 50;
                 this.newBird.destroy();
             });
         }
-
+*/
         
 
         // add new block when existing block hits center X
@@ -304,6 +311,7 @@ class Play1 extends Phaser.Scene {
         
         if (this.p1.x < 0){
             this.backgroundMusic.stop();
+            this.sound.play('die');
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
             
@@ -326,7 +334,7 @@ class Play1 extends Phaser.Scene {
         }
 
         // check if p1 is grounded
-	    this.p1.isGrounded = this.p1.body.touching.down;
+	    this.p1.isGrounded = this.p1.body.down;
 	    // if so, we have jumps to spare 
 	    if(this.p1.isGrounded) {
 	    	this.jumps = this.MAX_JUMPS;
