@@ -5,8 +5,9 @@ class Play1 extends Phaser.Scene {
 
     preload(){
         //load images
-        this.load.spritesheet('runner', './assets/run_boy.png', {frameWidth: 32, frameHeight: 48, startFrame: 0});
-        this.load.spritesheet('enemy', './assets/birdsheet.png', {frameWidth: 48, frameHeight: 32, startFrame: 0});
+        //this.load.spritesheet('runner', './assets/run_boy.png', {frameWidth: 32, frameHeight: 48, startFrame: 0});
+        //this.load.spritesheet('enemy', './assets/birdsheet.png', {frameWidth: 48, frameHeight: 32, startFrame: 0});
+        this.load.atlas('animations', './assets/animAtlas.png', './assets/animAtlas.json');
         this.load.image('dirt', './assets/dirt_tile.png');
         this.load.image('background', './assets/first.png');
         this.load.image('city1', './assets/city1.png');
@@ -54,10 +55,10 @@ class Play1 extends Phaser.Scene {
         this.groundScroll = this.add.tileSprite(0, game.config.height-64, game.config.width, 64, 'dirt').setOrigin(0);
 
         //set up p1 kid
-        this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1);
+        this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1).setOrigin(0.5, 1);
         this.p1.setCollideWorldBounds(true);
         
-        this.physics.world.setBounds(0, 0, game.config.width, game.config.height, false, true, true, true);
+        this.physics.world.setBounds(0, 0, game.config.width, game.config.height-64, false, true, true, true);
 
         
 
@@ -66,9 +67,13 @@ class Play1 extends Phaser.Scene {
 
         this.anims.create({
             key: 'bird',
-            frames: this.anims.generateFrameNumbers('enemy',{
-                start:0,
-                end: 2,
+            frames: this.anims.generateFrameNames('animations',{
+                prefix: 'bird_enemy',
+                start:1,
+                end: 3,
+                zeroPad: 1,
+                frameWidth: 48,
+                frameHeight: 32,
             }),
             frameRate: 10,
             repeat: -1
@@ -76,22 +81,32 @@ class Play1 extends Phaser.Scene {
 
         this.anims.create({
             key: 'run',
-            frames: this.anims.generateFrameNumbers('runner', {
-                start: 0,
-                end: 3,
+            frames: this.anims.generateFrameNames('animations', {
+                prefix:'run_boy',
+                start: 1,
+                end: 4,
+                zeroPad: 1,
+                frameWidth: 32,
+                frameHeight: 48,
             }),
             frameRate: 10,
             repeat: -1
         });
         this.anims.create({
             key: 'jump',
-            frames: this.anims.generateFrameNumbers('runner', {
-                start: 0,
-                end: 0,
+            frames: this.anims.generateFrameNames('animations', {
+                prefix: 'run_boy',
+                start: 1,
+                end: 1,
+                zeroPad: 1,
+                frameWidth: 32,
+                frameHeight: 48,
             }),
             frameRate: 1
         });
 
+        this.p1.anims.play('run');
+/*
         this.anims.create({
             key: 'hit',
             frames: this.anims.generateFrameNumbers('bone',{
@@ -101,7 +116,7 @@ class Play1 extends Phaser.Scene {
             frameRate: 10
         });
 
-        this.p1.anims.play('run');
+        
 
         this.input.on('pointerdown', () => {
             console.log("smack");
@@ -110,7 +125,7 @@ class Play1 extends Phaser.Scene {
             this.p1.anims.play('hit', true);
         });
 
-        
+        */
 
 
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
