@@ -14,11 +14,13 @@ class Menu extends Phaser.Scene {
         this.load.image('play', './assets/play.png');
         this.load.image('controls', './assets/controls.png');
         this.load.image('credits', './assets/credits.png');
+        this.load.audio('click', './assets/blipSelect.wav');
         
         
     }
 
     create(){
+
         //this.scene.start('playScene1');
         this.back2 = this.add.tileSprite(0, 0, 960, 540, 'clouds').setOrigin(0, 0);
         //this.back1 = this.add.tileSprite(0, 0, 960, 540, 'city'). setOrigin(0, 0);
@@ -36,6 +38,7 @@ class Menu extends Phaser.Scene {
         // Enable input events for the whole scene
         this.play.setInteractive({ useHandCursor: true });
         this.play.on('pointerdown', () => {
+            this.sound.play('click');
             console.log("play");
             this.scene.start('playScene1');
         });
@@ -45,6 +48,7 @@ class Menu extends Phaser.Scene {
         this.controls.setInteractive({ useHandCursor: true });
         this.controls.on('pointerdown', () => {
             console.log("controls");
+            this.sound.play('click');
             this.scene.pause();
             this.scene.launch('controlScene');
 
@@ -55,6 +59,7 @@ class Menu extends Phaser.Scene {
         this.credits.setInteractive({ useHandCursor: true });
         this.credits.on('pointerdown', () => {
             console.log('credits');
+            this.sound.play('click');
             this.scene.pause();
             this.scene.launch('creditScene');
             //this.scene.start('playScene1');

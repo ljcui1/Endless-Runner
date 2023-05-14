@@ -11,9 +11,11 @@ class GameOver extends Phaser.Scene {
         this.load.image('over', './assets/gameover.png');
         this.load.image('restart', './assets/restart.png');
         this.load.image('menu', './assets/mainmenu_button.png');
+        this.load.audio('click', './assets/blipSelect.wav');
     }
 
     create(){
+
         
         
         // check for high score in local storage
@@ -69,6 +71,7 @@ class GameOver extends Phaser.Scene {
         this.restart.setInteractive({ useHandCursor: true });
         this.restart.on('pointerdown', () => {
             console.log("restart");
+            this.sound.play('click');
             this.scene.stop();
             this.scene.start('playScene1');
             
@@ -78,7 +81,8 @@ class GameOver extends Phaser.Scene {
         this.menu.setInteractive({ useHandCursor: true });
         this.menu.on('pointerdown', () => {
             console.log("menu");
-            this.scene.launch('menuScene');
+            this.sound.play('click');
+            this.scene.start('menuScene');
             this.scene.stop('playScene1');
             this.scene.stop();
         });

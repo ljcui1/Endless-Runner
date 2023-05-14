@@ -6,6 +6,7 @@ class Credits extends Phaser.Scene {
     preload(){
         this.load.image('page', './assets/credits_page.png');
         this.load.image('back', './assets/back_button.png');
+        this.load.audio('click', './assets/blipSelect.wav');
     }
 
     create(){
@@ -17,6 +18,7 @@ class Credits extends Phaser.Scene {
         this.back.setInteractive();
         this.back.on('pointerdown', () => {
             console.log("back");
+            this.sound.play('click');
             this.scene.resume('menuScene');
             this.scene.stop();
             

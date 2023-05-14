@@ -15,6 +15,7 @@ class Play1 extends Phaser.Scene {
         this.load.image('esc', './assets/esc.png');
         this.load.image('meat', './assets/meat.png');
         this.load.spritesheet('bone', './assets/bonesheet.png', {frameWidth: 48, frameHeight: 48, startFrame: 0});
+        this.load.audio('music', './assets/backgroundmusic.wav');
     }
 
     create(){
@@ -28,6 +29,10 @@ class Play1 extends Phaser.Scene {
         this.physics.world.gravity.y = 2600;
         this.jumps = this.MAX_JUMPS;
         this.jumping = false; // <-- Initialize 'this.jumping' to 'false'
+
+        this.backgroundMusic = this.sound.add('music');
+        this.backgroundMusic.setLoop(true);
+        this.backgroundMusic.play();
 
         //tile sprite
         this.background = this.add.tileSprite(0, 0, 960, 540, 'background').setOrigin(0, 0);
@@ -100,6 +105,8 @@ class Play1 extends Phaser.Scene {
 
         this.input.on('pointerdown', () => {
             console.log("smack");
+            this.p1.anims.play('run', false);
+            this.p1.anims.play('jump', false);
             this.p1.anims.play('hit', true);
         });
 
