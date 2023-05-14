@@ -98,6 +98,11 @@ class Play1 extends Phaser.Scene {
 
         this.p1.anims.play('run');
 
+        this.input.on('pointerdown', () => {
+            console.log("smack");
+            this.p1.anims.play('hit');
+        });
+
         
 
 
@@ -301,10 +306,7 @@ class Play1 extends Phaser.Scene {
 	    	this.jumping = false;
 	    }
 
-        this.input.on('pointerdown', () => {
-            console.log("smack");
-            this.p1.anims.play('hit');
-        });
+        
 
 
         //pause
