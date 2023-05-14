@@ -100,7 +100,7 @@ class Play1 extends Phaser.Scene {
 
         this.input.on('pointerdown', () => {
             console.log("smack");
-            this.p1.anims.play('hit');
+            this.p1.anims.play('hit', true);
         });
 
         
@@ -112,6 +112,11 @@ class Play1 extends Phaser.Scene {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        // set up barrier group
+        this.meatGroup = this.add.group({
+            runChildUpdate: true
+        });
 
         // set up barrier group
         this.blockGroup = this.add.group({
@@ -135,6 +140,8 @@ class Play1 extends Phaser.Scene {
             this.addEnemy();
         })
 
+        
+
         // add physics collider
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.blockGroup);
@@ -142,6 +149,12 @@ class Play1 extends Phaser.Scene {
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
         });
+
+        this.physics.add.collider(this.p1, this.meatGroup, () => {
+            this.score += 25;
+            this.newMeat.destroy();
+            
+        })
         
         
 
@@ -210,6 +223,8 @@ class Play1 extends Phaser.Scene {
     addBlock() {
         this.newBlock = new Block(this, 180).setOrigin(0.5, 1);
         this.blockGroup.add(this.newBlock);
+        this.newMeat = new Meat(this.newBlock.x, this.newBlock.y - 64, this, 180).setOrigin(0.5, 1);
+        this.meatGroup.add(this.newMeat);
         
         
     }
