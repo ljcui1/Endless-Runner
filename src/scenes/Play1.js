@@ -48,6 +48,7 @@ class Play1 extends Phaser.Scene {
         this.ground = this.add.group();
         for(let i = 0; i < game.config.width; i += 64) {
             let groundTile = this.physics.add.sprite(i, game.config.height - 64, 'dirt').setScale(1).setOrigin(0);
+        
             groundTile.body.immovable = true;
             groundTile.body.allowGravity = false;
             this.ground.add(groundTile);
@@ -58,7 +59,7 @@ class Play1 extends Phaser.Scene {
         this.ground.add(this.groundScroll);
 
         //set up p1 kid
-        this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'runner').setScale(1).setOrigin(0.5, 1);
+        this.p1 = this.physics.add.sprite(200, game.config.height - 85, 'animations').setScale(1).setOrigin(0.5, 0.5);
         this.physics.world.setBounds(0, 0, game.config.width, game.config.height-64, false, true, true, true);
         
         this.p1.setCollideWorldBounds(true);
@@ -77,8 +78,6 @@ class Play1 extends Phaser.Scene {
                 start:1,
                 end: 3,
                 zeroPad: 1,
-                frameWidth: 48,
-                frameHeight: 32,
             }),
             frameRate: 10,
             repeat: -1
@@ -91,8 +90,6 @@ class Play1 extends Phaser.Scene {
                 start: 1,
                 end: 4,
                 zeroPad: 1,
-                frameWidth: 32,
-                frameHeight: 48,
             }),
             frameRate: 10,
             repeat: -1
@@ -104,8 +101,6 @@ class Play1 extends Phaser.Scene {
                 start: 1,
                 end: 1,
                 zeroPad: 1,
-                frameWidth: 32,
-                frameHeight: 48,
             }),
             frameRate: 1
         });
@@ -334,7 +329,7 @@ class Play1 extends Phaser.Scene {
         }
 
         // check if p1 is grounded
-	    this.p1.isGrounded = this.p1.body.down;
+	    this.p1.isGrounded = this.p1.body.onFloor;
 	    // if so, we have jumps to spare 
 	    if(this.p1.isGrounded) {
 	    	this.jumps = this.MAX_JUMPS;
@@ -358,6 +353,7 @@ class Play1 extends Phaser.Scene {
 
         //pause
         if(Phaser.Input.Keyboard.JustDown(keyESC)){
+            this.backgroundMusic.pause();
             this.scene.pause();
             this.scene.launch('pauseScene');
         }

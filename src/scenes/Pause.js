@@ -22,7 +22,7 @@ class Pause extends Phaser.Scene {
         this.resume.setInteractive({ useHandCursor: true });
         this.resume.on('pointerdown', () => {
             console.log("resume");
-            this.sound.play('click');
+            this.sound.play('click', {volume: 0.25});
             this.scene.resume('playScene1');
             this.scene.stop();
         });
@@ -36,7 +36,7 @@ class Pause extends Phaser.Scene {
         this.menu.setInteractive({ useHandCursor: true });
         this.menu.on('pointerdown', () => {
             console.log("menu");
-            this.click.play();
+            this.sound.play('click', {volume: 0.25});
             this.scene.launch('menuScene');
             this.scene.stop('playScene1');
             this.scene.stop();
