@@ -14,6 +14,7 @@ class Play1 extends Phaser.Scene {
         this.load.image('city3', './assets/city3.png');
         this.load.image('esc', './assets/esc.png');
         this.load.image('meat', './assets/meat.png');
+        this.load.spritesheet('bone', './assets/bonesheet.png', {frameWidth: 48, frameHeight: 48, startFrame: 0});
     }
 
     create(){
@@ -86,6 +87,15 @@ class Play1 extends Phaser.Scene {
             frameRate: 1
         });
 
+        this.anims.create({
+            key: 'hit',
+            frames: this.anims.generateFrameNumbers('bone',{
+                start: 0,
+                end: 2
+            }),
+            frameRate: 10
+        });
+
         this.p1.anims.play('run');
 
         
@@ -127,6 +137,8 @@ class Play1 extends Phaser.Scene {
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
         });
+        
+        
 
         
 
@@ -206,6 +218,15 @@ class Play1 extends Phaser.Scene {
         this.groundScroll.tilePositionX += 3;
 
         
+            
+        if (this.p1.anims.currentAnim.key === 'hit'){
+            this.physics.add.collider(this.p1, this.newBird, () => {
+                this.score += 50;
+                this.newBird.destroy();
+            });
+        }
+
+        
 
         // add new block when existing block hits center X
         if(this.newBlock.x < spawnRateBlock) {
@@ -244,6 +265,7 @@ class Play1 extends Phaser.Scene {
             
         }
 
+        
 
         
         this.p1.anims.play('run', true);
@@ -278,6 +300,12 @@ class Play1 extends Phaser.Scene {
 	    	this.jumps--;
 	    	this.jumping = false;
 	    }
+
+        this.input.on('pointerdown', () => {
+            console.log("smack");
+            this.p1.anims.play('hit');
+        });
+
 
         //pause
         if(Phaser.Input.Keyboard.JustDown(keyESC)){

@@ -26,4 +26,4 @@ let keyW, keyA, keyS, keyD, keySPACE, keyESC;
 let highScore;
 let newHighScore = false;
 let spawnRateBlock = 768;
-let spawnRateBird = 720;
+let spawnRateBird = 480;
