@@ -1,6 +1,7 @@
 class GameOver extends Phaser.Scene {
     constructor(){
         super('overScene');
+        this.soundPlayed = false; // Flag to track if the sound has been played
     }
 
     init (args){
@@ -69,9 +70,12 @@ class GameOver extends Phaser.Scene {
 
     update(){
         this.restart.setInteractive({ useHandCursor: true });
-        this.restart.on('pointerdown', () => {
+        this.restart.on('pointerup', () => {
             console.log("restart");
-            this.sound.play('click', {volume: 0.25});
+            if (!this.soundPlayed) {
+                this.sound.play('click', { volume: 0.25 });
+                this.soundPlayed = true; // Set the flag to true after playing the sound
+            }
             this.scene.stop();
             this.scene.start('playScene1');
             
@@ -79,9 +83,12 @@ class GameOver extends Phaser.Scene {
 
 
         this.menu.setInteractive({ useHandCursor: true });
-        this.menu.on('pointerdown', () => {
+        this.menu.on('pointerup', () => {
             console.log("menu");
-            this.sound.play('click', {volume: 0.25});
+            if (!this.soundPlayed) {
+                this.sound.play('click', { volume: 0.25 });
+                this.soundPlayed = true; // Set the flag to true after playing the sound
+            }
             this.scene.stop();
             this.scene.start('menuScene');
             this.scene.stop('playScene1');

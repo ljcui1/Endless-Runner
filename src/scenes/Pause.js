@@ -1,6 +1,7 @@
 class Pause extends Phaser.Scene {
     constructor(){
         super('pauseScene');
+        this.soundPlayed = false; // Flag to track if the sound has been played
     }
 
     preload(){
@@ -20,9 +21,12 @@ class Pause extends Phaser.Scene {
 
     update(){
         this.resume.setInteractive({ useHandCursor: true });
-        this.resume.on('pointerdown', () => {
+        this.resume.on('pointerup', () => {
             console.log("resume");
-            this.sound.play('click', {volume: 0.25});
+            if (!this.soundPlayed) {
+                this.sound.play('click', { volume: 0.25 });
+                this.soundPlayed = true; // Set the flag to true after playing the sound
+            }
             this.scene.resume('playScene1');
             this.scene.stop();
         });
@@ -34,9 +38,12 @@ class Pause extends Phaser.Scene {
         }
 
         this.menu.setInteractive({ useHandCursor: true });
-        this.menu.on('pointerdown', () => {
+        this.menu.on('pointerup', () => {
             console.log("menu");
-            this.sound.play('click', {volume: 0.25});
+            if (!this.soundPlayed) {
+                this.sound.play('click', { volume: 0.25 });
+                this.soundPlayed = true; // Set the flag to true after playing the sound
+            }
             this.scene.launch('menuScene');
             this.scene.stop('playScene1');
             this.scene.stop();
