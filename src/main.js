@@ -8,7 +8,8 @@ Creative Tilt Justification:
 things I utilized. Pulling from Professor Altice's Paddle Parkour P3, I implemented a 
 locally stored highscore. I also figured out that I could implement increasing difficulty
 by setting a timer that would count every 45 seconds and increase the spawn rate of the
-obstacles. 
+obstacles. It was also very difficult for me but I managed to have collision to a group 
+target specific game objects.
 
     Appearance wise, I feel that I stretched myself to the limit with this game.
 I drew all of the assets and even dipped into music/sound production as I used 
