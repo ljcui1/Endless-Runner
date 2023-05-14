@@ -15,6 +15,7 @@ class Menu extends Phaser.Scene {
         this.load.image('controls', './assets/controls.png');
         this.load.image('credits', './assets/credits.png');
         this.load.audio('click', './assets/blipSelect.wav');
+        this.load.image('rules', './assets/rules.png');
         
         
     }
@@ -34,13 +35,22 @@ class Menu extends Phaser.Scene {
         this.play = this.add.sprite(400, 300, 'play').setOrigin(0, 0);
         this.controls = this.add.sprite(400, 380, 'controls').setOrigin(0, 0);
         this.credits = this.add.sprite(400, 460, 'credits').setOrigin(0, 0);
+        this.rules = this.add.tileSprite(0, 0, 960, 540, 'rules').setOrigin(0, 0);
+        this.rules.setVisible(false);
 
         // Enable input events for the whole scene
         this.play.setInteractive({ useHandCursor: true });
         this.play.on('pointerdown', () => {
             this.sound.play('click');
             console.log("play");
-            this.scene.start('playScene1');
+            this.read = this.time.addEvent({
+                delay: 15000,
+                callback: this.start(),
+                callbackScope: this,
+                loop: false
+            });
+            this.rules.setVisible(true);
+            
         });
 
         this.play.input.hitArea.setTo(0, 0, this.play.width, this.play.height); // Set up hit area
@@ -81,6 +91,10 @@ class Menu extends Phaser.Scene {
         });
 
         this.title.anims.play('wave');
+    }
+
+    start(){
+        this.scene.start('playScene1');
     }
 
     update(){

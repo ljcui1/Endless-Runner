@@ -168,6 +168,7 @@ class Play1 extends Phaser.Scene {
         this.physics.add.collider(this.p1, this.ground);
         this.physics.add.collider(this.p1, this.blockGroup);
         this.physics.add.collider(this.p1, this.birdGroup, () => {
+            this.backgroundMusic.stop();
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
         });
@@ -302,6 +303,7 @@ class Play1 extends Phaser.Scene {
         })
         
         if (this.p1.x < 0){
+            this.backgroundMusic.stop();
             this.scene.pause();
             this.scene.launch('overScene', {score: this.score});
             

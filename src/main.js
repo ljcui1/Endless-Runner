@@ -1,3 +1,24 @@
+/*
+
+Name: Lia Cui
+Game Title: Armakiddon
+Approximate Hours: ~25-30 hours
+Creative Tilt Justification:
+    In terms of what makes the game technically interesting, there are a couple of
+things I utilized. Pulling from Professor Altice's Paddle Parkour P3, I implemented a 
+locally stored highscore. I also figured out that I could implement increasing difficulty
+by setting a timer that would count every 45 seconds and increase the spawn rate of the
+obstacles. 
+
+    Appearance wise, I feel that I stretched myself to the limit with this game.
+I drew all of the assets and even dipped into music/sound production as I used 
+JummBox and Jsfxr to make the background music and sound effects. All text in the
+game aside from score display was hand-drawn in Aseprite. I only just started working 
+in pixel art this quarter and I'm proud of the work I've done, especially the parallax
+background and dirt tile sprite.
+
+*/
+
 
 'use strict';
 
