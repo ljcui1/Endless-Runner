@@ -43,13 +43,8 @@ class Menu extends Phaser.Scene {
         this.play.on('pointerdown', () => {
             this.sound.play('click');
             console.log("play");
-            this.read = this.time.addEvent({
-                delay: 15000,
-                callback: this.start(),
-                callbackScope: this,
-                loop: false
-            });
-            this.rules.setVisible(true);
+            this.scene.start('ruleScene');
+            
             
         });
 
@@ -93,9 +88,7 @@ class Menu extends Phaser.Scene {
         this.title.anims.play('wave');
     }
 
-    start(){
-        this.scene.start('playScene1');
-    }
+    
 
     update(){
         this.back2.tilePositionX -= 0.1;
